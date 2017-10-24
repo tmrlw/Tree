@@ -1,4 +1,4 @@
-import tree.*
+import arborescence.*
 
 describe "root" {
 	

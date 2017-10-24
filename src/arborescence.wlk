@@ -39,7 +39,7 @@ class Vertex {
 	}
 	*/
 	
-	// root.order() returns the amount of vertices in the tree.
+	// root.order() returns the amount of vertices in the arborescence.
 	
 	method order() {
 		if (children.isEmpty()) {
@@ -59,7 +59,7 @@ class Vertex {
 		}
 	}
 	
-	// root.height() returns the highest level of the tree.
+	// root.height() returns the highest level of the arborescence.
 	
 	method height() {
 		return self.height(0)
@@ -91,7 +91,7 @@ class Vertex {
 		return acc
 	}
 	
-	// root.level() recursively maps the tree by the level of each vertex.
+	// root.level() recursively maps the arborescence by the level of each vertex.
 	
 	method level() {
 		if (children.isEmpty()) {
@@ -109,7 +109,7 @@ class Vertex {
 		}
 	}
 	
-	// root.degree() recursively maps the tree by the number of incident edges of each vertex.
+	// root.degree() recursively maps the arborescence by the number of incident edges of each vertex.
 	
 	method degree() {
 		if (children.isEmpty()) {
@@ -127,7 +127,7 @@ class Vertex {
 		}
 	}
 	
-	// root.label() recursively maps the tree by assigning each vertex a unique label.
+	// root.label() recursively maps the arborescence by assigning each vertex a unique label.
 	
 	method label() {
 		if (children.isEmpty()) {
