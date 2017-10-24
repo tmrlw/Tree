@@ -1,0 +1,5 @@
+import arborescence.*
+
+program example {
+	console.println('yet to be developed')
+}
