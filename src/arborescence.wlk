@@ -3,6 +3,37 @@ object root inherits Vertex { }
 class Vertex {
 	var children = []
 	
+	/**
+	TODO: use apply on every label-based method
+
+	method apply(label, closure) {
+		if (label == 0) {
+			closure.apply(self)
+		} else {
+			if (children.isEmpty().negate()) {
+				var order = 1
+				var child
+				children.size().times({t =>
+					child = children.get(t - 1)
+					child.apply(label - order, closure)
+					order += child.order()
+				})
+			}
+		}
+	}
+
+	*/
+	
+	// root.order() returns the total amount of vertices.
+	
+	method order() {
+		if (children.isEmpty()) {
+			return 1
+		} else {
+			return 1 + children.map({c => c.order()}).sum()
+		}
+	}
+	
 	// root.bylabel() recursively maps the arborescence by assigning each vertex a unique label.
 	
 	method bylabel() {
@@ -34,12 +65,14 @@ class Vertex {
 	}
 	
 	// root.add(n) adds n children to the root.
+	// TODO: missing exceptions
 	
 	method add(n) {
 		n.times({t => children.add(new Vertex())})
 	}
 	
 	// root.add(x, n) adds n children to the vertex x.
+	// TODO: missing exceptions
 	
 	method add(label, n) {
 		if (label == 0 or label == "R") {
@@ -57,34 +90,36 @@ class Vertex {
 		}
 	}
 	
-	/**
-
-	method apply(label, closure) {
-		if (label == 0) {
-			closure.apply(self)
-		} else {
-			if (children.isEmpty().negate()) {
-				var order = 1
-				var child
+	// root.detach(x) detaches the vertex x.
+	// TODO: missing exceptions; make better break
+	
+	method detach(label) {
+		if (label == 0 or label == "R") {
+			throw new Exception()
+		}
+		if (children.isEmpty().negate()) {
+			var order = 1
+			var child
+			try {
 				children.size().times({t =>
 					child = children.get(t - 1)
-					child.apply(label - order, closure)
-					order += child.order()
+					if (label - order  == 0) {
+						children.remove(child)
+						throw new Exception()
+					} else {
+						child.detach(label - order)
+						order += child.order()
+					}
 				})
 			}
+			catch e: Exception { }
 		}
 	}
-
-	*/
 	
-	// root.order() returns the total amount of vertices.
+	// root.reset() deletes all the vertices except root.
 	
-	method order() {
-		if (children.isEmpty()) {
-			return 1
-		} else {
-			return 1 + children.map({c => c.order()}).sum()
-		}
+	method reset() {
+		children = []
 	}
 	
 	// root.leaves() returns the number of vertices that don't have any children.
@@ -112,6 +147,7 @@ class Vertex {
 	}
 	
 	// root.level(x) returns the number of vertices of the level x.
+	// TODO: missing exceptions
 	
 	method level(l) {
 		if (l == 0) {
