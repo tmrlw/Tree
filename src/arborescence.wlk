@@ -1,4 +1,4 @@
-object root inherits Vertex { }
+//object root inherits Vertex { }
 
 class Vertex {
 	var children = []
@@ -30,7 +30,7 @@ class Vertex {
 		if (children.isEmpty()) {
 			return 1
 		} else {
-			return 1 + children.map({c => c.order()}).sum()
+			return 1 + children.sum({c => c.order()})
 		}
 	}
 	
@@ -80,12 +80,16 @@ class Vertex {
 		} else {
 			if (children.isEmpty().negate()) {
 				var order = 1
-				var child
-				children.size().times({t =>
-					child = children.get(t - 1)
+				//var child
+//				children.size().times({t =>
+//					child = children.get(t - 1)
+//					child.add(label - order, n)
+//					order += child.order()
+//				})
+				children.forEach{child=>
 					child.add(label - order, n)
 					order += child.order()
-				})
+				}
 			}
 		}
 	}
@@ -94,25 +98,18 @@ class Vertex {
 	// TODO: missing exceptions; make better break
 	
 	method detach(label) {
-		if (label == 0 or label == "R") {
+		if (label == 0 or label == "R") 
 			throw new Exception()
-		}
 		if (children.isEmpty().negate()) {
 			var order = 1
-			var child
-			try {
-				children.size().times({t =>
-					child = children.get(t - 1)
-					if (label - order  == 0) {
-						children.remove(child)
-						throw new Exception()
-					} else {
-						child.detach(label - order)
-						order += child.order()
-					}
-				})
+			children.forEach{child =>
+				if (label == order)
+					children.remove(child)
+				else {
+					child.detach(label - order)
+					order += child.order()
+				}
 			}
-			catch e: Exception { }
 		}
 	}
 	

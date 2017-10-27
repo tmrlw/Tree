@@ -1,7 +1,7 @@
 import arborescence.*
 
 describe "root" {
-	
+	var root = new Vertex() 
 	/**
 	
 	(seed) is just the root.
